@@ -1,9 +1,14 @@
-from flask import Flask,render_template,request
-import pickle
+from flask import Flask,render_template,url_for,request,redirect
 import numpy as np
+import pandas as pd
+import joblib
+import pickle
+app = Flask(__name__)
 
-model = pickle.load(open('model.pkl','rb'))
-        qqqqqqq queue`````  queue   queue       queue`queueq    `                   `   `       `   `   q   `queue2 q`  `       queue`  3
+model = joblib.load('model.pkl')
+
+
+
 
 @app.route('/')
 def index():
@@ -11,11 +16,11 @@ def index():
 
 @app.route('/predict',methods=['POST'])
 def predict_placement():
-    cgpa = float(request.form.get('age'))
-    iq = int(request.form.get('physical_score'))
+    age = float(request.form.get('age'))
+    physical_score = float(request.form.get('physical_score'))
 
     # prediction
-    result = model.predict(np.array([age,physcial_score]).reshape(1,2))
+    result = model.predict(np.array([age,physical_score]).reshape(1,2))
 
     if result[0] == 1:
         result = 'hearing is good'
